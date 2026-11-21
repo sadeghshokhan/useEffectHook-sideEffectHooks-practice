@@ -42,6 +42,14 @@ function App() {
       const place = AVAILABLE_PLACES.find((place) => place.id === id);
       return [place, ...prevPickedPlaces];
     });
+
+    const localStored = JSON.parse(localStorage.getItem("storedPlaces")) || [];
+
+    if(localStored.indexOf(id) === -1){
+      localStorage.setItem("storedPlaces" , JSON.stringify([...localStored , id]))
+    }
+
+  
   }
 
   function handleRemovePlace() {
@@ -49,6 +57,9 @@ function App() {
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
     modal.current.close();
+
+    const localStored = JSON.parse(localStorage.getItem("storedPlaces")) || [];
+    localStorage.setItem("storedPlaces" , JSON.stringify(localStored.filter((place) => place.id !== selectedPlace.current)))
   }
 
   return (
