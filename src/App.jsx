@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-
 import Places from './components/Places.jsx';
 import { AVAILABLE_PLACES } from './data.js';
 import Modal from './components/Modal.jsx';
@@ -12,10 +11,10 @@ import { sortPlacesByDistance } from './loc.js';
   const readableSotrageData = allStorageDate.map((id) => AVAILABLE_PLACES.find((place) => place.id === id))
 
 function App() {
-  const modal = useRef();
   const selectedPlace = useRef();
   const [pickedPlaces, setPickedPlaces] = useState(readableSotrageData);
-  const [AvailablePalaces, setAvalablePlaces] = useState([])
+  const [AvailablePalaces, setAvalablePlaces] = useState([]);
+  const [ modalIsOpen , setModalIsOpen ] = useState(false)
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -30,12 +29,12 @@ function App() {
   }, [])
 
   function handleStartRemovePlace(id) {
-    modal.current.open();
+    setModalIsOpen(true)
     selectedPlace.current = id;
   }
 
   function handleStopRemovePlace() {
-    modal.current.close();
+    setModalIsOpen(false)
   }
 
   function handleSelectPlace(id) {
@@ -67,7 +66,7 @@ function App() {
 
   return (
     <>
-      <Modal ref={modal}>
+      <Modal open={modalIsOpen}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
