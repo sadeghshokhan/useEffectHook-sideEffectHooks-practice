@@ -11,6 +11,8 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
       clearTimeout(timer);
     }
 
+    //tis is test
+
   })
   return (
     <div id="delete-confirmation">
